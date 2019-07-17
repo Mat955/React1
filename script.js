@@ -26,44 +26,30 @@ var theBestGames = [{
 }
 ];
 
-myFunction = (theBestGames, movies) => {
-    if (theBestGames) {
-        return React.createElement('li', {
-            key: theBestGames.id
-        },
-            React.createElement('h2', {}, theBestGames.title),
-            React.createElement('p', {}, theBestGames.desc),
-            React.createElement('img', {
-                src: theBestGames.photo
-            }),
-        );
-    } if (movies) {
-        return React.createElement('li', {
-            key: movies.id
-        },
-            React.createElement('h2', {}, movies.title),
-            React.createElement('p', {}, movies.desc),
-            React.createElement('img', {
-                src: movies.photo
-            }),
-        );
-    }
+var moviesElements = movies.map(createElementFromItem);
+var gamesElements = theBestGames.map(createElementFromItem);
+
+var elementFilms = generateElementsContainer('List of The Best Films', moviesElements);
+var elementGames = generateElementsContainer('List of The Best Games', gamesElements);
+
+function generateElementsContainer(headerText, elements) {
+    return React.createElement('div', {},
+        React.createElement('h1', {}, headerText),
+        React.createElement('ul', {}, elements)
+    );
 }
 
-var moviesElements = movies.map(myFunction);
-var allGamesElements = theBestGames.map(myFunction);
-
-var elementFilms =
-    React.createElement('div', {},
-        React.createElement('h1', {}, 'List of Films'),
-        React.createElement('ul', {}, moviesElements)
+function createElementFromItem(singleItem) {
+    return React.createElement('li', {
+        key: singleItem.id
+    },
+        React.createElement('h2', {}, singleItem.title),
+        React.createElement('p', {}, singleItem.desc),
+        React.createElement('img', {
+            src: singleItem.photo
+        })
     );
-
-var elementGames =
-    React.createElement('div', {},
-        React.createElement('h1', {}, 'List of The Best Games'),
-        React.createElement('ul', {}, allGamesElements)
-    );
+}
 
 ReactDOM.render(elementGames, document.getElementById('app-games'));
-ReactDOM.render(elementFilms, document.getElementById('app-films')); 
+ReactDOM.render(elementFilms, document.getElementById('app-films'));
